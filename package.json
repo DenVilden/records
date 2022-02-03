@@ -1,0 +1,61 @@
+{
+  "name": "records",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "seed": "node src/seed.js",
+    "serve": "json-server --watch src/db.json -p 5000"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.3.1",
+    "@mui/lab": "^5.0.0-alpha.67",
+    "@mui/material": "^5.4.0",
+    "@mui/x-data-grid": "^5.4.0",
+    "@mui/x-data-grid-generator": "^5.4.0",
+    "axios": "^0.25.0",
+    "date-fns": "^2.28.0",
+    "json-server": "^0.17.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "^5.0.0"
+  },
+  "devDependencies": {
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-sort-destructure-keys": "^1.4.0",
+    "prettier": "^2.5.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ],
+    "plugins": [
+      "sort-destructure-keys",
+      "simple-import-sort"
+    ],
+    "rules": {
+      "sort-destructure-keys/sort-destructure-keys": "warn",
+      "simple-import-sort/imports": "warn",
+      "simple-import-sort/exports": "warn",
+      "react/jsx-sort-props": "warn"
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "printWidth": 88
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
