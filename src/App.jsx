@@ -7,6 +7,7 @@ import {
   Button,
   FormControl,
   InputLabel,
+  LinearProgress,
   MenuItem,
   Pagination,
   Paper,
@@ -14,7 +15,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material"
-import { DataGrid } from "@mui/x-data-grid"
+import { DataGrid, GridOverlay } from "@mui/x-data-grid"
 import axios from "axios"
 import { format, parseISO } from "date-fns"
 import ruLocale from "date-fns/locale/ru"
@@ -61,7 +62,7 @@ export default function App() {
   const [dateTo, setDateTo] = useState(null)
   const [loading, setLoading] = useState(false)
   const totalPages = useRef(null)
-  const [sortingMode, setSortingMode] = useState([{ field: "time", sort: "desc" }])
+  const [sortingMode, setSortingMode] = useState({ field: "time", sort: "desc" })
 
   useEffect(() => {
     setLoading(true)
@@ -71,10 +72,9 @@ export default function App() {
           params: {
             _limit: limit,
             _page: page,
-            ...(sortingMode[0]
-              ? { _sort: sortingMode[0].field, _order: sortingMode[0].sort }
-              : {}),
-            ...(searchText ? { q: searchText } : {}),
+            _sort: sortingMode.field,
+            _order: sortingMode.sort,
+            ...(searchText.trim() ? { q: searchText.trim() } : {}),
             ...(event ? { event } : {}),
             ...(dateFrom instanceof Date && !isNaN(dateFrom)
               ? { time_gte: dateFrom }
@@ -248,21 +248,29 @@ export default function App() {
                   Нет результатов
                 </Stack>
               ),
+              LoadingOverlay: () => (
+                <GridOverlay>
+                  <Stack sx={{ position: "absolute", top: 0, width: "100%" }}>
+                    <LinearProgress />
+                  </Stack>
+                </GridOverlay>
+              ),
             }}
             disableColumnMenu
             hideFooter
             loading={loading}
             onColumnHeaderClick={(_, evt) => {
-              if (evt.target.className === "MuiDataGrid-columnHeaderTitleContainer") {
+              if (evt.target.tagName === "DIV") {
                 evt.defaultMuiPrevented = true
               }
             }}
             onSortModelChange={(model) => {
-              setSortingMode(model)
+              setSortingMode(model[0])
             }}
-            rows={!loading ? records : []}
-            sortModel={sortingMode}
+            rows={records}
+            sortModel={[sortingMode]}
             sortingMode="server"
+            sortingOrder={["asc", "desc"]}
           />
         </StyledBox>
         {!!records.length && (
