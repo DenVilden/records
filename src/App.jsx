@@ -228,7 +228,10 @@ export default function App() {
         </Stack>
         <FormControl>
           <Select
-            onChange={(evt) => setLimit(evt.target.value)}
+            onChange={(evt) => {
+              setLimit(evt.target.value)
+              setPage(1)
+            }}
             size="small"
             value={limit}
           >
